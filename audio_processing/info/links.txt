@@ -1,0 +1,43 @@
+[AUDIO TO IMAGE]
+https://en.wikipedia.org/wiki/Spectrogram
+http://convert.ing-now.com/generate-a-waveform-image-from-an-audio-file/
+https://habr.com/post/103635/
+https://thebestschools.org/magazine/turn-data-images-into-sounds/
+
+[Java]
+https://stackoverflow.com/questions/6045384/playing-mp3-and-wav-in-java
+https://stackoverflow.com/questions/11017283/java-program-to-create-a-png-waveform-for-an-audio-file
+
+[Golang]
+https://github.com/hajimehoshi/go-mp3/blob/master/example/main.go
+https://github.com/mdlayher/waveform
+https://godoc.org/github.com/tcolgate/mp3#pkg-examples
+https://github.com/avelino/awesome-go#audio-and-music
+https://github.com/avelino/awesome-go
+https://gobyexample.com/string-formatting
+
+
+
+[Useful Info]
+
+http://www.bastwood.com/?page_id=10
+
+https://ask.metafilter.com/23598/How-to-convert-a-drawn-waveform-into-a-sound-file
+
+https://www.reddit.com/r/audioengineering/comments/1vadv7/looking_for_tool_to_convert_graphical_waveform/
+
+i don't think this would work. to reconstruct the sound you have to use 1 pixel width for every sample your resulting pcm file would have, and as many vertical pixels as your resulting bit-depth (16bit =216 = 65536).
+
+so for example to reproduce a 1 second clip of a mono 44kHz 16bit PCM-signal you would need a picture with a resolution of 44000 x 65536. this gigantic file though would only contain the information of 1 second wav file, which would obviously be a total waste of storage and processing power.
+
+if you reduce the resolution of the picture you obviously lose information.
+
+if you reduce vertical pixels you reduce the bitdepth of the signal (this could work ok, since for every bit you reduce the bitdepth, you only need half the pixels. so for example 8 bit depth only would need 256 pixels. would not sound good, but recognizable).
+
+if you reduce horizontal pixels (while keeping the length of the audio clip) you reduce the sample rate -> you reduce the highest possible frequency in the signal ( = 1/2 sample rate).
+
+to produce a signal that could at least reproduce speech half decent, you would need at least a bandwith of 5kHz, so a samplerate of 10kHz, meaning you would still need 10000 pixels width per second of audio signal.
+
+a full hd picture of a 1 second clip (~2000pixel width) would limit your maximum frequeny to 1kHz. , for a 2 second clip to 500 Hz, 4 seconds => 250 Hz, etc etc
+
+so with existing pictures of waveforms you would produce nothing but low frequency rumble (in the best case).
